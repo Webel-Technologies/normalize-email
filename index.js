@@ -1,30 +1,43 @@
 'use strict'
 
-var MINUS_ONLY = /\-.*$/
-var PLUS_ONLY = /\+.*$/
-var PLUS_AND_DOT = /\.|\+.*$/g
+const MINUS_ONLY = /\-.*$/
+const PLUS_ONLY = /\+.*$/
+const PLUS_AND_DOT = /\.|\+.*$/g
 
-var normalizeableProviders = {
-    'gmail.com': {
+const knownProviders = {
+    gmail: /^gmail\..*/,
+    googlemail: /^googlemail\..*/,
+    hotmail: /^hotmail\..*/,
+    live: /^live\..*/,
+    outlook: /^outlook\..*/,
+    icloud: /^icloud\..*/,
+    yahoo: /^yahoo\..*/,
+}
+
+const normalizeableProviders = {
+    gmail: {
         cut: PLUS_AND_DOT,
     },
-    'googlemail.com': {
+    googlemail: {
         cut: PLUS_AND_DOT,
-        aliasOf: 'gmail.com',
+        aliasOf: {
+            replace: /googlemail/,
+            replacement: 'gmail',
+        },
     },
-    'hotmail.com': {
+    hotmail: {
         cut: PLUS_ONLY,
     },
-    'live.com': {
-        cut: PLUS_AND_DOT,
-    },
-    'outlook.com': {
+    live: {
         cut: PLUS_ONLY,
     },
-    'icloud.com': {
+    outlook: {
         cut: PLUS_ONLY,
     },
-    'yahoo.com': {
+    icloud: {
+        cut: PLUS_ONLY,
+    },
+    yahoo: {
         cut: MINUS_ONLY,
     },
 }
@@ -44,12 +57,15 @@ module.exports = function normalizeEmail(emailToNormalize) {
     let username = emailParts[0]
     let domain = emailParts[1]
 
-    if (normalizeableProviders.hasOwnProperty(domain)) {
-        if (normalizeableProviders[domain].hasOwnProperty('cut')) {
-            username = username.replace(normalizeableProviders[domain].cut, '')
+    const providerEntry = Object.entries(knownProviders).find(([_, providerRegex]) => providerRegex.test(domain))
+
+    if (providerEntry) {
+        if (normalizeableProviders[providerEntry[0]].hasOwnProperty('cut')) {
+            username = username.replace(normalizeableProviders[providerEntry[0]].cut, '')
         }
-        if (normalizeableProviders[domain].hasOwnProperty('aliasOf')) {
-            domain = normalizeableProviders[domain].aliasOf
+        if (normalizeableProviders[providerEntry[0]].hasOwnProperty('aliasOf')) {
+            const { replace, replacement } = normalizeableProviders[providerEntry[0]].aliasOf
+            domain = domain.replace(replace, replacement)
         }
     }
 
