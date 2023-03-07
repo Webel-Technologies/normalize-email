@@ -1,34 +1,36 @@
 {
-  "name": "normalize-email",
-  "description": "Normalize + and . emails for uniqueness validation",
-  "author": "John Otander",
-  "version": "1.1.1",
-  "main": "index.js",
-  "types": "index.d.ts",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "mocha test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/johnotander/normalize-email.git"
-  },
-  "keywords": [
-    "email",
-    "normalize",
-    "gmail",
-    "hotmail",
-    "live",
-    "outlook"
-  ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/johnotander/normalize-email/issues"
-  },
-  "homepage": "https://github.com/johnotander/normalize-email",
-  "devDependencies": {
-    "mocha": "*"
-  }
+    "name": "normalize-email",
+    "description": "Normalize + and . emails for uniqueness validation",
+    "author": "John Otander",
+    "version": "1.2.0",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "mocha test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Webel-Technologies/normalize-email.git"
+    },
+    "keywords": [
+        "email",
+        "normalize",
+        "gmail",
+        "hotmail",
+        "live",
+        "outlook",
+        "icloud",
+        "yahoo"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Webel-Technologies/normalize-email/issues"
+    },
+    "homepage": "https://github.com/Webel-Technologies/normalize-email",
+    "devDependencies": {
+        "mocha": "*"
+    }
 }
